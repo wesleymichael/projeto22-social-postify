@@ -1,5 +1,6 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PublicationsRepository } from './publications.repository';
+import { PublicationDTO } from './dtos/publications.dto';
 
 @Injectable()
 export class PublicationsService {
@@ -17,5 +18,12 @@ export class PublicationsService {
     if (publication) {
       throw new ForbiddenException('PostId belongs to publication data!');
     }
+  }
+
+  async createPublication(body: PublicationDTO) {
+    //TODO
+    //verificar se mediaId existe
+    //verificar se postId existe
+    return await this.repository.createPublication(body);
   }
 }

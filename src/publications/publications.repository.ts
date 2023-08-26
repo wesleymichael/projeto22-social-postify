@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { PublicationDTO } from './dtos/publications.dto';
 
 @Injectable()
 export class PublicationsRepository {
@@ -15,5 +16,9 @@ export class PublicationsRepository {
     return this.prisma.publications.findFirst({
       where: { postId },
     });
+  }
+
+  createPublication(data: PublicationDTO) {
+    return this.prisma.publications.create({ data });
   }
 }
