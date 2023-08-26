@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -38,5 +39,11 @@ export class PostsController {
     @Body() body: PostsDTO,
   ) {
     return await this.postsService.updatePost(id, body);
+  }
+
+  @Delete('/:id')
+  // eslint-disable-next-line prettier/prettier
+  async deletePost(@Param('id', new ParseIntPipe({ exceptionFactory: () => new BadRequestException('Invalid ID format') })) id: number) {
+    return await this.postsService.deletePost(id);
   }
 }

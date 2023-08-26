@@ -17,7 +17,7 @@ export class PostsRepository {
   }
 
   getPostById(id: number) {
-    return this.prisma.posts.findMany({
+    return this.prisma.posts.findFirst({
       where: { id },
     });
   }
@@ -25,6 +25,12 @@ export class PostsRepository {
   updatePost(id: number, data: PostsDTO) {
     return this.prisma.posts.update({
       data,
+      where: { id },
+    });
+  }
+
+  deletePost(id: number) {
+    return this.prisma.posts.delete({
       where: { id },
     });
   }
