@@ -6,6 +6,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Put,
 } from '@nestjs/common';
 import { MediaDTO } from './dtos/medias.dto';
 import { MediasService } from './medias.service';
@@ -28,5 +29,14 @@ export class MediasController {
   // eslint-disable-next-line prettier/prettier
   async getMediaById(@Param('id', new ParseIntPipe({ exceptionFactory: () => new BadRequestException('Invalid ID format') })) id: number) {
     return this.mediaService.getMediaById(id);
+  }
+
+  @Put('/:id')
+  async updateMedia(
+    // eslint-disable-next-line prettier/prettier
+    @Param('id', new ParseIntPipe({ exceptionFactory: () => new BadRequestException('Invalid ID format') })) id: number,
+    @Body() body: MediaDTO,
+  ) {
+    return this.mediaService.updateMedia(id, body);
   }
 }

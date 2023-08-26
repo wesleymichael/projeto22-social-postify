@@ -18,6 +18,7 @@ export class MediasRepository {
       },
     });
   }
+
   getMedias() {
     return this.prisma.medias.findMany({
       select: {
@@ -27,6 +28,7 @@ export class MediasRepository {
       },
     });
   }
+
   getMediaById(id: number) {
     return this.prisma.medias.findUnique({
       select: {
@@ -37,6 +39,13 @@ export class MediasRepository {
       where: {
         id,
       },
+    });
+  }
+
+  updateMedia(id: number, data: MediaDTO) {
+    return this.prisma.medias.update({
+      data,
+      where: { id },
     });
   }
 }
