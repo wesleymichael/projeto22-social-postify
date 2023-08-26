@@ -6,6 +6,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Put,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { PostsDTO } from './dtos/posts.dto';
@@ -28,5 +29,14 @@ export class PostsController {
   // eslint-disable-next-line prettier/prettier
   async getPostsById(@Param('id', new ParseIntPipe({ exceptionFactory: () => new BadRequestException('Invalid ID format') })) id: number) {
     return await this.postsService.getPostById(id);
+  }
+
+  @Put('/:id')
+  async updatePost(
+    // eslint-disable-next-line prettier/prettier
+    @Param('id', new ParseIntPipe({ exceptionFactory: () => new BadRequestException('Invalid ID format') })) id: number,
+    @Body() body: PostsDTO,
+  ) {
+    return await this.postsService.updatePost(id, body);
   }
 }

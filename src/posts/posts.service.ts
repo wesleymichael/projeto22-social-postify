@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Post } from '@nestjs/common';
 import { PostsRepository } from './posts.repository';
 import { PostsDTO } from './dtos/posts.dto';
 import { Posts } from '@prisma/client';
@@ -24,6 +24,11 @@ export class PostsService {
     return this.formatPosts(post);
   }
 
+  async updatePost(id: number, body: PostsDTO) {
+    await this.checkExistencePost(id);
+    return await this.repository.updatePost(id, body);
+  }
+
   private formatPosts(posts: Posts[]) {
     return posts.map((post) => ({
       id: post.id,
@@ -34,10 +39,10 @@ export class PostsService {
   }
 
   private async checkExistencePost(id: number) {
-    const media = await this.repository.getPostById(id);
-    if (!media) {
-      throw new NotFoundException('Media not found!');
+    const post = await this.repository.getPostById(id);
+    if (!Post) {
+      throw new NotFoundException('Post not found!');
     }
-    return media;
+    return post;
   }
 }

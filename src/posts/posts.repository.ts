@@ -21,4 +21,11 @@ export class PostsRepository {
       where: { id },
     });
   }
+
+  updatePost(id: number, data: PostsDTO) {
+    return this.prisma.posts.update({
+      data,
+      where: { id },
+    });
+  }
 }
