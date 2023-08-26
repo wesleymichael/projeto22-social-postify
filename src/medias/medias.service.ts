@@ -1,7 +1,9 @@
 import {
   ConflictException,
+  Inject,
   Injectable,
   NotFoundException,
+  forwardRef,
 } from '@nestjs/common';
 import { MediasRepository } from './medias.repository';
 import { MediaDTO } from './dtos/medias.dto';
@@ -10,8 +12,9 @@ import { PublicationsService } from 'src/publications/publications.service';
 @Injectable()
 export class MediasService {
   constructor(
-    private readonly repository: MediasRepository,
+    @Inject(forwardRef(() => PublicationsService))
     private readonly publicationService: PublicationsService,
+    private readonly repository: MediasRepository,
   ) {}
 
   async createMedia(body: MediaDTO) {
