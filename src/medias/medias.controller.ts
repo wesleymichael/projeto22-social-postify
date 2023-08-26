@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -38,5 +39,11 @@ export class MediasController {
     @Body() body: MediaDTO,
   ) {
     return this.mediaService.updateMedia(id, body);
+  }
+
+  @Delete('/:id')
+  // eslint-disable-next-line prettier/prettier
+  async deleteMedia(@Param('id', new ParseIntPipe({ exceptionFactory: () => new BadRequestException('Invalid ID format') })) id: number) {
+    return this.mediaService.deleteMedia(id);
   }
 }

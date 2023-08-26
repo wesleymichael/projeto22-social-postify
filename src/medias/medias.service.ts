@@ -20,20 +20,27 @@ export class MediasService {
   }
 
   async getMediaById(id: number) {
+    const media = await this.checkExistenceMedia(id);
+    return media;
+  }
+
+  async updateMedia(id: number, body: MediaDTO) {
+    await this.checkExistenceMedia(id);
+    await this.checkDuplicateMediaRecord(body);
+    return await this.repository.updateMedia(id, body);
+  }
+
+  async deleteMedia(id: number) {
+    await this.checkExistenceMedia(id);
+    return await this.repository.deleteMedia(id);
+  }
+
+  private async checkExistenceMedia(id: number) {
     const media = await this.repository.getMediaById(id);
     if (!media) {
       throw new NotFoundException('Media not found!');
     }
     return media;
-  }
-
-  async updateMedia(id: number, body: MediaDTO) {
-    const media = await this.repository.getMediaById(id);
-    if (!media) {
-      throw new NotFoundException('Media not found!');
-    }
-    await this.checkDuplicateMediaRecord(body);
-    return await this.repository.updateMedia(id, body);
   }
 
   private async checkDuplicateMediaRecord(body: MediaDTO) {

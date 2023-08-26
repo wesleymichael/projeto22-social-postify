@@ -48,4 +48,10 @@ export class MediasRepository {
       where: { id },
     });
   }
+
+  deleteMedia(id: number) {
+    return this.prisma.medias.delete({
+      where: { id },
+    });
+  }
 }
