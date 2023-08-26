@@ -9,4 +9,13 @@ export class MediasRepository {
   createMedia(data: MediaDTO) {
     return this.prisma.medias.create({ data });
   }
+
+  findMediaByUsernameAndTitle(data: MediaDTO) {
+    return this.prisma.medias.findFirst({
+      where: {
+        title: data.title,
+        username: data.username,
+      },
+    });
+  }
 }

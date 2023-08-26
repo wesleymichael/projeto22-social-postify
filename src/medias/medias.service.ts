@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { MediasRepository } from './medias.repository';
 import { MediaDTO } from './dtos/medias.dto';
 
@@ -7,6 +7,15 @@ export class MediasService {
   constructor(private readonly repository: MediasRepository) {}
 
   async createMedia(body: MediaDTO) {
+    const media = await this.repository.findMediaByUsernameAndTitle(body);
+    console.log(media);
+    if (media) {
+      throw new HttpException(
+        'Record with title and username combination already exists',
+        HttpStatus.CONFLICT,
+      );
+    }
+
     return await this.repository.createMedia(body);
   }
 }
