@@ -5,10 +5,14 @@ import {
 } from '@nestjs/common';
 import { MediasRepository } from './medias.repository';
 import { MediaDTO } from './dtos/medias.dto';
+import { PublicationsService } from 'src/publications/publications.service';
 
 @Injectable()
 export class MediasService {
-  constructor(private readonly repository: MediasRepository) {}
+  constructor(
+    private readonly repository: MediasRepository,
+    private readonly publicationService: PublicationsService,
+  ) {}
 
   async createMedia(body: MediaDTO) {
     await this.checkDuplicateMediaRecord(body);
@@ -31,6 +35,7 @@ export class MediasService {
   }
 
   async deleteMedia(id: number) {
+    await this.publicationService.getPublicationByMediaId(id);
     await this.checkExistenceMedia(id);
     return await this.repository.deleteMedia(id);
   }

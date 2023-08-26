@@ -2,10 +2,14 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PostsRepository } from './posts.repository';
 import { PostsDTO } from './dtos/posts.dto';
 import { Posts } from '@prisma/client';
+import { PublicationsService } from 'src/publications/publications.service';
 
 @Injectable()
 export class PostsService {
-  constructor(private readonly repository: PostsRepository) {}
+  constructor(
+    private readonly repository: PostsRepository,
+    private readonly publicationService: PublicationsService,
+  ) {}
 
   async createPost(body: PostsDTO) {
     return await this.repository.createPost(body);
@@ -30,6 +34,7 @@ export class PostsService {
   }
 
   async deletePost(id: number) {
+    await this.publicationService.getPublicationByPostId(id);
     await this.checkExistencePost(id);
     return await this.repository.deletePost(id);
   }

@@ -5,9 +5,15 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class PublicationsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  getPublicationByMediaId(id: number) {
+  getPublicationByMediaId(mediaId: number) {
     return this.prisma.publications.findFirst({
-      where: { mediaId: id },
+      where: { mediaId },
+    });
+  }
+
+  getPublicationByPostId(postId: number) {
+    return this.prisma.publications.findFirst({
+      where: { postId },
     });
   }
 }

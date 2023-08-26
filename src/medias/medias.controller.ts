@@ -11,14 +11,10 @@ import {
 } from '@nestjs/common';
 import { MediaDTO } from './dtos/medias.dto';
 import { MediasService } from './medias.service';
-import { PublicationsService } from 'src/publications/publications.service';
 
 @Controller('medias')
 export class MediasController {
-  constructor(
-    private readonly mediaService: MediasService,
-    private readonly publicationService: PublicationsService,
-  ) {}
+  constructor(private readonly mediaService: MediasService) {}
 
   @Post()
   async createMedia(@Body() body: MediaDTO) {
@@ -48,7 +44,6 @@ export class MediasController {
   @Delete('/:id')
   // eslint-disable-next-line prettier/prettier
   async deleteMedia(@Param('id', new ParseIntPipe({ exceptionFactory: () => new BadRequestException('Invalid ID format') })) id: number) {
-    await this.publicationService.getPublicationByMediaId(id);
     return this.mediaService.deleteMedia(id);
   }
 }

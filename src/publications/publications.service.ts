@@ -8,7 +8,14 @@ export class PublicationsService {
   async getPublicationByMediaId(mediaId: number) {
     const publication = await this.repository.getPublicationByMediaId(mediaId);
     if (publication) {
-      throw new ForbiddenException('MediaId pertente à dados de publication!');
+      throw new ForbiddenException('MediaId belongs to publication data!');
+    }
+  }
+
+  async getPublicationByPostId(postId: number) {
+    const publication = await this.repository.getPublicationByPostId(postId);
+    if (publication) {
+      throw new ForbiddenException('PostId belongs to publication data!');
     }
   }
 }
