@@ -19,7 +19,7 @@ model Medias {
   Publications Publications[]
 }
 
-model Post {
+model Posts {
   id           Int            @id @default(autoincrement())
   title        String
   text         String
@@ -34,6 +34,6 @@ model Publications {
   mediaId Int
   Medias  Medias   @relation(fields: [mediaId], references: [id])
   postId  Int
-  Post    Post     @relation(fields: [postId], references: [id])
+  Posts   Posts    @relation(fields: [postId], references: [id])
   date    DateTime
 }
