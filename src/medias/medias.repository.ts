@@ -27,4 +27,16 @@ export class MediasRepository {
       },
     });
   }
+  getMediaById(id: number) {
+    return this.prisma.medias.findUnique({
+      select: {
+        id: true,
+        title: true,
+        username: true,
+      },
+      where: {
+        id,
+      },
+    });
+  }
 }
