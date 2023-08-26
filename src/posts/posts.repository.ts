@@ -11,4 +11,8 @@ export class PostsRepository {
       data,
     });
   }
+
+  getPosts() {
+    return this.prisma.posts.findMany();
+  }
 }

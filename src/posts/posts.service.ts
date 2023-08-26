@@ -9,4 +9,14 @@ export class PostsService {
   async createPost(body: PostsDTO) {
     return await this.repository.createPost(body);
   }
+
+  async getPosts() {
+    const posts = await this.repository.getPosts();
+    return posts.map((post) => ({
+      id: post.id,
+      text: post.text,
+      title: post.title,
+      ...(post.image !== null ? { image: post.image } : {}),
+    }));
+  }
 }
