@@ -18,4 +18,13 @@ export class MediasRepository {
       },
     });
   }
+  getMedias() {
+    return this.prisma.medias.findMany({
+      select: {
+        id: true,
+        title: true,
+        username: true,
+      },
+    });
+  }
 }

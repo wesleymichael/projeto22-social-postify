@@ -8,14 +8,15 @@ export class MediasService {
 
   async createMedia(body: MediaDTO) {
     const media = await this.repository.findMediaByUsernameAndTitle(body);
-    console.log(media);
     if (media) {
       throw new HttpException(
         'Record with title and username combination already exists',
         HttpStatus.CONFLICT,
       );
     }
-
     return await this.repository.createMedia(body);
+  }
+  async getMedias() {
+    return await this.repository.getMedias();
   }
 }
