@@ -7,12 +7,15 @@ import {
 import { PublicationsRepository } from './publications.repository';
 import { PublicationDTO } from './dtos/publications.dto';
 import { MediasService } from 'src/medias/medias.service';
+import { PostsService } from 'src/posts/posts.service';
 
 @Injectable()
 export class PublicationsService {
   constructor(
     @Inject(forwardRef(() => MediasService))
     private readonly mediasService: MediasService,
+    @Inject(forwardRef(() => PostsService))
+    private readonly postsService: PostsService,
     private readonly repository: PublicationsRepository,
   ) {}
 
@@ -32,9 +35,7 @@ export class PublicationsService {
 
   async createPublication(body: PublicationDTO) {
     await this.mediasService.getMediaById(body.mediaId);
-
-    //TODO
-    //verificar se postId existe
+    await this.postsService.getPostById(body.postId);
 
     return await this.repository.createPublication(body);
   }

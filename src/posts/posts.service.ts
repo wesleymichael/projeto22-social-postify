@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  NotFoundException,
+  forwardRef,
+} from '@nestjs/common';
 import { PostsRepository } from './posts.repository';
 import { PostsDTO } from './dtos/posts.dto';
 import { Posts } from '@prisma/client';
@@ -7,8 +12,9 @@ import { PublicationsService } from 'src/publications/publications.service';
 @Injectable()
 export class PostsService {
   constructor(
-    private readonly repository: PostsRepository,
+    @Inject(forwardRef(() => PublicationsService))
     private readonly publicationService: PublicationsService,
+    private readonly repository: PostsRepository,
   ) {}
 
   async createPost(body: PostsDTO) {
@@ -23,7 +29,7 @@ export class PostsService {
   async getPostById(id: number) {
     const post = await this.checkExistencePost(id);
     if (!post) {
-      throw new NotFoundException('No record for submitted ID!');
+      throw new NotFoundException('No record for submitted postId!');
     }
     return this.formatPosts([post]);
   }
