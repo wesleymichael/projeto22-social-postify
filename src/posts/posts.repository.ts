@@ -15,4 +15,10 @@ export class PostsRepository {
   getPosts() {
     return this.prisma.posts.findMany();
   }
+
+  getPostById(id: number) {
+    return this.prisma.posts.findMany({
+      where: { id },
+    });
+  }
 }
