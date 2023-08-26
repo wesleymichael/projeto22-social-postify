@@ -7,7 +7,7 @@ export class PostsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   createPost(data: PostsDTO) {
-    return this.prisma.post.create({
+    return this.prisma.posts.create({
       data,
     });
   }
