@@ -2,6 +2,7 @@ import {
   ForbiddenException,
   Inject,
   Injectable,
+  NotFoundException,
   forwardRef,
 } from '@nestjs/common';
 import { PublicationsRepository } from './publications.repository';
@@ -42,5 +43,13 @@ export class PublicationsService {
 
   async getPublications() {
     return await this.repository.getPublications();
+  }
+
+  async getPublicationById(id: number) {
+    const publication = await this.repository.getPublicationById(id);
+    if (!publication) {
+      throw new NotFoundException('No record for submitted publicationId!');
+    }
+    return [publication];
   }
 }

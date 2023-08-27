@@ -32,4 +32,10 @@ export class PublicationsRepository {
       },
     });
   }
+
+  getPublicationById(id: number) {
+    return this.prisma.publications.findUnique({
+      where: { id },
+    });
+  }
 }

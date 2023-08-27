@@ -1,6 +1,14 @@
 import { PublicationDTO } from './dtos/publications.dto';
 import { PublicationsService } from './publications.service';
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+} from '@nestjs/common';
 
 @Controller('publications')
 export class PublicationsController {
@@ -14,5 +22,11 @@ export class PublicationsController {
   @Get()
   async getPublications() {
     return await this.publicationsService.getPublications();
+  }
+
+  @Get('/:id')
+  // eslint-disable-next-line prettier/prettier
+  async getPublicationById(@Param('id', new ParseIntPipe({ exceptionFactory: () => new BadRequestException('Invalid ID format') })) id: number) {
+    return await this.publicationsService.getPublicationById(id);
   }
 }
