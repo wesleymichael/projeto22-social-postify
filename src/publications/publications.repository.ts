@@ -45,4 +45,10 @@ export class PublicationsRepository {
       where: { id },
     });
   }
+
+  deletePublication(id: number) {
+    return this.prisma.publications.delete({
+      where: { id },
+    });
+  }
 }

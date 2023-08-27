@@ -46,18 +46,12 @@ export class PublicationsService {
   }
 
   async getPublicationById(id: number) {
-    const publication = await this.repository.getPublicationById(id);
-    if (!publication) {
-      throw new NotFoundException('No record for submitted publicationId!');
-    }
+    const publication = await this.checkExistencePublication(id);
     return [publication];
   }
 
   async updatePublication(id: number, body: PublicationDTO) {
-    const publication = await this.repository.getPublicationById(id);
-    if (!publication) {
-      throw new NotFoundException('Publication not found');
-    }
+    const publication = await this.checkExistencePublication(id);
 
     const currentDate = new Date().toISOString();
     if (publication.date.toISOString() < currentDate) {
@@ -70,5 +64,18 @@ export class PublicationsService {
     await this.postsService.getPostById(body.postId);
 
     return await this.repository.updatePublication(id, body);
+  }
+
+  async deletePublication(id: number) {
+    await this.checkExistencePublication(id);
+    return await this.repository.deletePublication(id);
+  }
+
+  private async checkExistencePublication(publicationId: number) {
+    const publication = await this.repository.getPublicationById(publicationId);
+    if (!publication) {
+      throw new NotFoundException('Publication not found');
+    }
+    return publication;
   }
 }
