@@ -39,4 +39,8 @@ export class PublicationsService {
 
     return await this.repository.createPublication(body);
   }
+
+  async getPublications() {
+    return await this.repository.getPublications();
+  }
 }

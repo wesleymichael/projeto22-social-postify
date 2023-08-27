@@ -21,4 +21,15 @@ export class PublicationsRepository {
   createPublication(data: PublicationDTO) {
     return this.prisma.publications.create({ data });
   }
+
+  getPublications() {
+    return this.prisma.publications.findMany({
+      select: {
+        id: true,
+        mediaId: true,
+        postId: true,
+        date: true,
+      },
+    });
+  }
 }
