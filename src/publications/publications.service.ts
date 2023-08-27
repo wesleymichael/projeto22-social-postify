@@ -52,4 +52,23 @@ export class PublicationsService {
     }
     return [publication];
   }
+
+  async updatePublication(id: number, body: PublicationDTO) {
+    const publication = await this.repository.getPublicationById(id);
+    if (!publication) {
+      throw new NotFoundException('Publication not found');
+    }
+
+    const currentDate = new Date().toISOString();
+    if (publication.date.toISOString() < currentDate) {
+      throw new ForbiddenException(
+        'Publication that has already been published!',
+      );
+    }
+
+    await this.mediasService.getMediaById(body.mediaId);
+    await this.postsService.getPostById(body.postId);
+
+    return await this.repository.updatePublication(id, body);
+  }
 }

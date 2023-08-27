@@ -8,6 +8,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Put,
 } from '@nestjs/common';
 
 @Controller('publications')
@@ -28,5 +29,14 @@ export class PublicationsController {
   // eslint-disable-next-line prettier/prettier
   async getPublicationById(@Param('id', new ParseIntPipe({ exceptionFactory: () => new BadRequestException('Invalid ID format') })) id: number) {
     return await this.publicationsService.getPublicationById(id);
+  }
+
+  @Put('/:id')
+  async updatePublication(
+    // eslint-disable-next-line prettier/prettier
+    @Param('id', new ParseIntPipe({ exceptionFactory: () => new BadRequestException('Invalid ID format') })) id: number,
+    @Body() body: PublicationDTO,
+  ) {
+    return await this.publicationsService.updatePublication(id, body);
   }
 }

@@ -38,4 +38,11 @@ export class PublicationsRepository {
       where: { id },
     });
   }
+
+  updatePublication(id: number, data: PublicationDTO) {
+    return this.prisma.publications.update({
+      data,
+      where: { id },
+    });
+  }
 }
