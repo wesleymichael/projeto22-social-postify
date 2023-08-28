@@ -100,7 +100,7 @@ describe('AppController (e2e)', () => {
     );
   });
 
-  it('/medias (GET) => should return status 404 if no matching media record', async () => {
+  it('/medias/:id (GET) => should return status 404 if no matching media record', async () => {
     const nonExistentId = 1;
 
     await request(app.getHttpServer())
@@ -108,7 +108,7 @@ describe('AppController (e2e)', () => {
       .expect(HttpStatus.NOT_FOUND);
   });
 
-  it('/medias (GET) => should return media data and status 200', async () => {
+  it('/medias/:id (GET) => should return media data and status 200', async () => {
     const data = {
       title: 'mySocialMedia',
       username: 'myUsername',
