@@ -7,7 +7,7 @@ import {
 import { PostsRepository } from './posts.repository';
 import { PostsDTO } from './dtos/posts.dto';
 import { Posts } from '@prisma/client';
-import { PublicationsService } from 'src/publications/publications.service';
+import { PublicationsService } from '@/publications/publications.service';
 
 @Injectable()
 export class PostsService {

@@ -7,8 +7,8 @@ import {
 } from '@nestjs/common';
 import { PublicationsRepository } from './publications.repository';
 import { PublicationDTO } from './dtos/publications.dto';
-import { MediasService } from 'src/medias/medias.service';
-import { PostsService } from 'src/posts/posts.service';
+import { MediasService } from '@/medias/medias.service';
+import { PostsService } from '@/posts/posts.service';
 
 @Injectable()
 export class PublicationsService {
